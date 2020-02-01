@@ -16,7 +16,9 @@ public class ListTest {
 			todoList.addSubTaskToItem(nameItem, "Sub" + task, priority);
 			todoList.addSubTaskToItem(nameItem, "Sub" + task, priority);
 		}
-		System.out.println(todoList.toString());
+//		System.out.println(todoList.toString());
+		
+		System.out.println("Hello Git");
 
 	}
 }
