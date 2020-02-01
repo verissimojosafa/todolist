@@ -1,10 +1,10 @@
 package test;
 
-import app.list.List;
+import app.inventory.Inventory;
 
 public class ListTest {
 	public static void main(String[] args) {
-		List todoList = new List("Academia", 2);
+		Inventory todoList = new Inventory("Academia", 2);
 
 		for (int i = 0; i < 10; i++) {
 			String nameItem = "Supino" + i;

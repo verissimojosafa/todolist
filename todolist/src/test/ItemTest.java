@@ -2,7 +2,7 @@ package test;
 
 import java.util.Scanner;
 
-import app.item.Item;
+import app.inventory.item.Item;
 
 public class ItemTest {
 	public static void main(String[] args) {

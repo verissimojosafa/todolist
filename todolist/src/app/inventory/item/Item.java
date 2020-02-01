@@ -1,10 +1,25 @@
-package app.item;
+package app.inventory.item;
 
-import app.item.Task;
+import java.beans.Transient;
 import java.util.ArrayList;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import app.inventory.item.task.Task;
+
+@Entity
+@Table(name="items")
 public class Item {
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	private String name;
+	
+	@javax.persistence.Transient 
 	private Task task;
 	private ArrayList<Task> subTasks;
 
@@ -27,6 +42,10 @@ public class Item {
 
 		this.subTasks = new ArrayList<Task>();
 	}
+	
+	public Long getId() {
+		return this.id;
+	}
 
 	public String getName() {
 		return this.name;
@@ -34,6 +53,10 @@ public class Item {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getTask() {
+		return this.task.getTask();
 	}
 
 	/**

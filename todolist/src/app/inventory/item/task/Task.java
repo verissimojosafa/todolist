@@ -1,6 +1,17 @@
-package app.item;
+package app.inventory.item.task;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tasks")
 public class Task {
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	private String task;
 	private int priority;
 
@@ -19,7 +30,7 @@ public class Task {
 	}
 
 	public boolean setTask(String task) {
-		if (this.isValidTask(task)) {
+		if (Task.isValidTask(task)) {
 			this.task = task;
 
 			return true;

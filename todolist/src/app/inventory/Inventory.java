@@ -1,20 +1,41 @@
-package app.list;
-
-import app.item.Item;
+package app.inventory;
 
 import java.util.ArrayList;
 
-public class List {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import app.inventory.item.Item;
+
+@Entity
+@Table(name="inventories")
+public class Inventory {
+	@Id
+	@GeneratedValue
+	private Long id;
+	
 	private String name;
+	
+	@Transient
 	private ArrayList<Item> items;
 	private int priority;
+	
+	// Construtor criado sem
+	public Inventory() {
+		this.name = "";
+		this.items = new ArrayList<Item>();
+		this.priority = 0;
+	}
 
 	/**
 	 * 
 	 * @param name
 	 * @param priority
 	 */
-	public List(String name, int priority) {
+	public Inventory(String name, int priority) {
 		this.name = name;
 		this.priority = priority;
 
@@ -23,6 +44,10 @@ public class List {
 
 	public String getName() {
 		return this.name;
+	}
+	
+	public Long getId() {
+		return this.id;
 	}
 
 	/**
