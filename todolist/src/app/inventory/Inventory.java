@@ -1,33 +1,33 @@
 package app.inventory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import app.inventory.item.Item;
 
 @Entity
-@Table(name="inventories")
+@Table(name = "inventories")
 public class Inventory {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	private String name;
-	
-	@Transient
-	private ArrayList<Item> items;
+
+	@OneToMany
+	@JoinColumn(name = "inventory_id")
+	private List<Item> items;
+
 	private int priority;
-	
-	// Construtor criado sem
+
 	public Inventory() {
-		this.name = "";
-		this.items = new ArrayList<Item>();
-		this.priority = 0;
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class Inventory {
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public Long getId() {
 		return this.id;
 	}
@@ -71,7 +71,7 @@ public class Inventory {
 	}
 
 	/**
-	 * Add item in ArrayList
+	 * Add item in List
 	 * 
 	 * @param name
 	 * @param task
@@ -81,26 +81,6 @@ public class Inventory {
 		Item item = new Item(name, task, priority);
 
 		items.add(item);
-	}
-
-	/**
-	 * Add a subitem to item
-	 * 
-	 * @param text
-	 * @param name
-	 * @param task
-	 * @param priority
-	 */
-	public boolean addSubTaskToItem(String text, String task, int priority) {
-		Item item = this.getItem(text);
-
-		if (item != null) {
-			item.addSubTask(task, priority);
-
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

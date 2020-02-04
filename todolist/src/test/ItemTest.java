@@ -1,27 +1,24 @@
 package test;
 
-import java.util.Scanner;
-
 import app.inventory.item.Item;
+import app.inventory.item.task.subtask.ISubtaskCRUD;
 
 public class ItemTest {
 	public static void main(String[] args) {
-		Scanner stringInput = new Scanner(System.in);
-		Scanner intInput = new Scanner(System.in);
+		Item item = new Item("Nome do item", "Nome da tarefa principal", 3);
+		ISubtaskCRUD subtaskCRUD = item.getSubtaskCRUD();
+//
+//		item.updateTask("nova", 1);
+//
+		subtaskCRUD.addSubtask("asdsad", 2);
+		subtaskCRUD.addSubtask("jojii", 2);
 
-		Item myItem = new Item("Academia", "Minha tarefa", 1);
-		myItem.addSubTask("Minha Subtarefa 1", 2);
-		myItem.addSubTask("Minha Subtarefa 2", 1);
+//		subtaskCRUD.deleteSubtask("j");
 
-		// System.out.println("Digite a nova tarefa e a sua prioridade: ");
-		// String task = stringInput.nextLine();
-		// int priority = intInput.nextInt();
-		// myItem.setTask(priority);
+		subtaskCRUD.updateSubtask("asd", "ajustada", 1);
 
-		myItem.setSubTask("Minha Subtarefa 2", "Nova", 3);
+//		System.out.println(subtaskCRUD.retrieveAllSubtasks());
 
-		myItem.removeSubTask("Nova");
-
-		System.out.println(myItem.toString(5));
+		System.out.println(item.toString());
 	}
 }

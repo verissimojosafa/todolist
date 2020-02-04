@@ -1,9 +1,11 @@
-package app.inventory;
+package app.controller;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import app.inventory.Inventory;
 
 import java.util.List;
 
