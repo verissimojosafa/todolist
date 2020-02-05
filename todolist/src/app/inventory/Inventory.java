@@ -10,11 +10,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import app.inventory.item.IItemCRUD;
 import app.inventory.item.Item;
+import app.inventory.item.task.ITaskCRUD;
+import app.inventory.item.task.subtask.ISubtaskCRUD;
 
+/**
+ * 
+ * @author Josafa
+ *
+ */
 @Entity
 @Table(name = "inventories")
-public class Inventory {
+public class Inventory implements IItemCRUD {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -50,10 +58,6 @@ public class Inventory {
 		return this.id;
 	}
 
-	/**
-	 * 
-	 * @param name
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -62,32 +66,44 @@ public class Inventory {
 		return this.priority;
 	}
 
-	/**
-	 * 
-	 * @param priority
-	 */
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
-	/**
-	 * Add item in List
-	 * 
-	 * @param name
-	 * @param task
-	 * @param priority
-	 */
-	public void addItem(String name, String task, int priority) {
-		Item item = new Item(name, task, priority);
+	// CRUD - Item
+	public boolean addItem(String name, String task, int priority) {
+		if (Item.isNameValid(name)) {
+			Item item = new Item(name, task, priority);
 
-		items.add(item);
+			items.add(item);
+			return true;
+		}
+
+		return false;
 	}
 
-	/**
-	 * 
-	 * @param text
-	 */
-	public boolean removeItem(String text) {
+	public String retrieveItem(String text) {
+		return this.getItem(text).toString();
+	}
+
+	public String retrieveAllItem() {
+		return this.toString();
+	}
+
+	public boolean updateItem(String text, String name, int priority) {
+		if (Item.isNameValid(name)) {
+			Item target = this.getItem(text);
+
+			target.setName(name);
+			target.updateTask(priority);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean deleteItem(String text) {
 		Item itemToRemove = this.getItem(text);
 
 		if (itemToRemove != null) {
@@ -98,6 +114,24 @@ public class Inventory {
 
 		return false;
 	}
+	// end CRUD - Item
+
+	// CRUD - Task
+	public ITaskCRUD getTaskCRUD(String toFindItem) {
+		Item target = this.getItem(toFindItem);
+		ITaskCRUD taskCRUD = target;
+
+		return taskCRUD;
+	}
+	// end CRUD - Task
+
+	// CRUD - Subtask
+	public ISubtaskCRUD getSubTaskCRUD(String toItem) {
+		Item target = this.getItem(toItem);
+
+		return target.getSubtaskCRUD();
+	}
+	// end CRUD - Subtask
 
 	private boolean textIsValid(String text) {
 		if (text.equals("") && text.equals(" ")) {
@@ -128,7 +162,7 @@ public class Inventory {
 		String list = this.getName() + "\n\n";
 
 		for (Item item : this.items) {
-			list += item.toString();
+			list += item.toString() + "\n";
 		}
 
 		return list;

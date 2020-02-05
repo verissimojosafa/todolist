@@ -9,12 +9,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import app.inventory.item.Item;
 import app.inventory.item.task.subtask.ISubtaskCRUD;
 import app.inventory.item.task.subtask.Subtask;
 
+/**
+ * 
+ * @author Josafa
+ *
+ */
 @Entity(name = "Task")
 @Table(name = "tasks")
 public class Task implements ISubtaskCRUD {
@@ -22,6 +29,10 @@ public class Task implements ISubtaskCRUD {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
+
+	@OneToOne
+	@JoinColumn(name = "item_id")
+	private Item item;
 
 	@OneToMany
 	@JoinColumn(name = "task_id")
@@ -115,7 +126,7 @@ public class Task implements ISubtaskCRUD {
 	 */
 	public boolean addSubtask(String task, int priority) {
 		if (Task.isValidTask(task)) {
-			Subtask subtask = new Subtask(this.task, this.priority, task, priority);
+			Subtask subtask = new Subtask(this, task, priority);
 
 			this.subtasks.add(subtask);
 

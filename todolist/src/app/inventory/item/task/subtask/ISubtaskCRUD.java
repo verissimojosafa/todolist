@@ -1,5 +1,10 @@
 package app.inventory.item.task.subtask;
 
+/**
+ * 
+ * @author Josafa
+ *
+ */
 public interface ISubtaskCRUD {
 	public boolean addSubtask(String task, int priority);
 

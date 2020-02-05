@@ -10,6 +10,11 @@ import javax.persistence.Table;
 
 import app.inventory.item.task.Task;
 
+/**
+ * 
+ * @author Josafa
+ *
+ */
 @Entity(name = "Subtask")
 @Table(name = "subtasks")
 public class Subtask {
@@ -31,8 +36,8 @@ public class Subtask {
 	public Subtask() {
 	}
 
-	public Subtask(String rootTask, int rootPriority, String task, int priority) {
-		this.setRootTask(rootTask, rootPriority);
+	public Subtask(Task rootTask, String task, int priority) {
+		this.rootTask = rootTask;
 		this.task = task;
 		this.priority = priority;
 	}
@@ -59,10 +64,6 @@ public class Subtask {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
-	}
-
-	public void setRootTask(String task, int priority) {
-		this.rootTask = new Task(task, priority);
 	}
 
 	public String toString() {

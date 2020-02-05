@@ -9,17 +9,13 @@ import app.inventory.item.task.Task;
  */
 public class ItemDAO extends Dao {
 
-	public ItemDAO() {
-		super();
-	}
-	
 	public void store(Task task) {
 		super.openSession();
-		
-		super.manager.getTransaction().begin();		
-			super.manager.persist(task);		
+
+		super.manager.getTransaction().begin();
+		super.manager.persist(task);
 		super.manager.getTransaction().commit();
-		
+
 		super.closeSession();
 	}
 }

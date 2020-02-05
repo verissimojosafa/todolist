@@ -6,16 +6,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import app.inventory.Inventory;
+import app.inventory.item.task.ITaskCRUD;
 import app.inventory.item.task.Task;
 import app.inventory.item.task.subtask.ISubtaskCRUD;
 
+/**
+ * 
+ * @author Josafa
+ *
+ */
 @Entity
 @Table(name = "items")
-public class Item {
+public class Item implements ITaskCRUD {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -27,8 +33,7 @@ public class Item {
 	@Column(name = "name")
 	private String name;
 
-	@OneToOne
-	@JoinColumn(name = "task_id")
+	@Transient
 	private Task task;
 
 	public Item() {
@@ -60,6 +65,7 @@ public class Item {
 		return this.task.toString();
 	}
 
+	// [C]RU[D] - task
 	public boolean updateTask(String task, int priority) {
 		if (Task.isValidTask(task)) {
 			this.task.setTask(task);
@@ -83,10 +89,24 @@ public class Item {
 		this.task.setPriority(priority);
 	}
 
+	public String retrieveTask() {
+		return this.task.toString();
+	}
+
+	// end [C]RU[D]
+
 	public ISubtaskCRUD getSubtaskCRUD() {
 		ISubtaskCRUD subtaskCRUD = this.task;
 
 		return subtaskCRUD;
+	}
+
+	public static boolean isNameValid(String name) {
+		if (name.equals(" ") || name.equals("")) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public String toString() {
