@@ -8,7 +8,7 @@ import app.inventory.item.Item;
 
 /**
  * 
- * @author JOSAFÁ VERÍSSIMO
+ * @author JOSAFï¿½ VERï¿½SSIMO
  *
  */
 public class ItemDAO extends Dao {

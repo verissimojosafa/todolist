@@ -2,6 +2,7 @@ package app.inventory.item;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,7 +20,7 @@ import app.inventory.item.task.subtask.ISubtaskCRUD;
  * @author Josafa
  *
  */
-@Entity
+@Entity(name = "Item")
 @Table(name = "items")
 public class Item implements ITaskCRUD {
 	@Id
@@ -58,6 +59,10 @@ public class Item implements ITaskCRUD {
 
 	public Long getId() {
 		return this.id;
+	}
+	
+	public Long getInventoryId() {
+		return this.inventory.getId();
 	}
 
 	public String getName() {
@@ -117,7 +122,12 @@ public class Item implements ITaskCRUD {
 	}
 
 	public String toString() {
-		String item = this.getName() + ":\n";
+		String id = "";
+		if(this.getId() != null) {
+			id += this.getId();
+		}
+		
+		String item = id + " - " + this.getName() + ":\n";
 
 		if (this.task != null) {
 			this.task.setTaskSpaces(4);

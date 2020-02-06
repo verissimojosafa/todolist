@@ -65,7 +65,7 @@ public class InventoryDAO extends Dao {
 
 		super.manager.getTransaction().begin();
 		Query select = super.manager
-				.createQuery("SELECT inventories from Inventory inventories where name like '%" + text + "%'");
+				.createQuery("SELECT i from Inventory i WHERE name like '%" + text + "%'");
 		List<Inventory> inventories = select.getResultList();
 
 		super.manager.getTransaction().commit();

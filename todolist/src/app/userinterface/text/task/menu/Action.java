@@ -1,11 +1,11 @@
-package app.userinterface.text.item.menu;
+package app.userinterface.text.task.menu;
 
 import java.util.List;
 import java.util.Scanner;
 
-import app.controller.ItemController;
-import app.inventory.item.Item;
-import app.userinterface.text.item.form.ItemForm;
+import app.controller.TaskController;
+import app.inventory.item.task.Task;
+import app.userinterface.text.task.form.TaskForm;
 
 public class Action {
 	private int[] actions;
@@ -16,12 +16,12 @@ public class Action {
 	private int actionUpdate;
 	private int actionDelete;
 
-	private ItemForm itemForm;
-	private ItemController itemController;
+	private TaskForm taskForm;
+	private TaskController taskController;
 
 	public Action(Menu menu) {
-		this.itemController = new ItemController();
-		this.itemForm = new ItemForm();
+		this.taskController = new TaskController();
+		this.taskForm = new TaskForm();
 		this.setActions(menu);
 	}
 
@@ -102,40 +102,40 @@ public class Action {
 		}
 	}
 
-	private Item doCreate() {
-		itemForm.setFields();
-		Item item = itemForm.getItem();
-		item = itemController.store(item);
+	private Task doCreate() {
+		taskForm.setFields();
+		Task task = taskForm.getTask();
+		task = taskController.store(task);
 
-		return item;
+		return task;
 	}
 
 	private void doRetrieveAll() {
-		List<Item> items = itemController.retrieveAll();
+		List<Task> tasks = taskController.retrieveAll();
 
-		for (Item item : items) {
-			System.out.println(item);
+		for (Task task : tasks) {
+			System.out.println(task);
 		}
 	}
 
 	public void doDelete() {
-		int id = itemForm.getId();
-		itemController.delete(id);
+		int id = taskForm.getId();
+		taskController.delete(id);
 	}
 
 	public void doUpdate() {
-		int id = itemForm.setUpdateFields();
-		Item item = itemForm.getItem();
+		int id = taskForm.setUpdateFields();
+		Task task = taskForm.getTask();
 
-		itemController.update(id, item.getName());
+		taskController.update(id, task.getTask(), task.getPriority());
 	}
 
 	public void doRetrieve() {
-		String text = itemForm.getText();
-		List<Item> inventories = itemController.retrieve(text);
+		String text = taskForm.getText();
+		List<Task> inventories = taskController.retrieve(text);
 
-		for (Item item : inventories) {
-			System.out.println(item);
+		for (Task task : inventories) {
+			System.out.println(task);
 		}
 	}
 }

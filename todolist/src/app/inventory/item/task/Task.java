@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,7 +35,7 @@ public class Task implements ISubtaskCRUD {
 	@JoinColumn(name = "item_id")
 	private Item item;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "task_id")
 	private List<Subtask> subtasks;
 
@@ -175,7 +176,7 @@ public class Task implements ISubtaskCRUD {
 		if (subtask != null) {
 			return subtask.toString();
 		} else {
-			return "Subtarefa não encontrada";
+			return "Subtarefa nï¿½o encontrada";
 		}
 	}
 
