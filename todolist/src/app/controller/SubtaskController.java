@@ -11,7 +11,7 @@ import app.inventory.item.task.subtask.Subtask;
 public class SubtaskController {
 	private final SubtaskDAO SUBTASK_DAO = new SubtaskDAO();
 
-	public void store(Subtask subtask) {
-		this.SUBTASK_DAO.store(subtask);
+	public Subtask store(Subtask subtask) {
+		return this.SUBTASK_DAO.store(subtask);
 	}
 }

@@ -9,7 +9,7 @@ import app.inventory.item.task.Task;
  */
 public class TaskDAO extends Dao {
 
-	public void store(Task task) {
+	public Task store(Task task) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
@@ -19,5 +19,7 @@ public class TaskDAO extends Dao {
 		super.manager.getTransaction().commit();
 
 		super.closeSession();
+
+		return task;
 	}
 }

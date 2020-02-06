@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,7 +21,7 @@ import app.inventory.item.task.subtask.ISubtaskCRUD;
  * @author Josafa
  *
  */
-@Entity
+@Entity(name = "Inventory")
 @Table(name = "inventories")
 public class Inventory implements IItemCRUD {
 	@Id
@@ -29,7 +30,7 @@ public class Inventory implements IItemCRUD {
 
 	private String name;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "inventory_id")
 	private List<Item> items;
 
@@ -38,14 +39,9 @@ public class Inventory implements IItemCRUD {
 	public Inventory() {
 	}
 
-	/**
-	 * 
-	 * @param name
-	 * @param priority
-	 */
 	public Inventory(String name, int priority) {
 		this.name = name;
-		this.priority = priority;
+		this.setPriority(priority);
 
 		this.items = new ArrayList<Item>();
 	}
@@ -67,7 +63,16 @@ public class Inventory implements IItemCRUD {
 	}
 
 	public void setPriority(int priority) {
-		this.priority = priority;
+		if (priority > 3) {
+			this.priority = 3;
+
+		} else if (priority < 0) {
+			this.priority = 0;
+
+		} else {
+			this.priority = priority;
+
+		}
 	}
 
 	// CRUD - Item
@@ -159,7 +164,7 @@ public class Inventory implements IItemCRUD {
 	}
 
 	public String toString() {
-		String list = this.getName() + "\n\n";
+		String list = this.getName() + ", " + this.getPriority() + "\n\n";
 
 		for (Item item : this.items) {
 			list += item.toString() + "\n";

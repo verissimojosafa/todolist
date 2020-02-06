@@ -47,9 +47,17 @@ public class Task implements ISubtaskCRUD {
 	@Transient
 	private int taskSpaces;
 
-	// Default Constructor to Hibernate
 	public Task() {
 		this.taskSpaces = 0;
+	}
+
+	public Task(Item item, String task, int priority) {
+		if (item.getId() != null) {
+			this.item = item;
+		}
+
+		this.task = task;
+		this.priority = priority;
 	}
 
 	public Task(String task, int priority) {

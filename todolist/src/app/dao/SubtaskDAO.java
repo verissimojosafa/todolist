@@ -3,7 +3,7 @@ package app.dao;
 import app.inventory.item.task.subtask.Subtask;
 
 public class SubtaskDAO extends Dao {
-	public void store(Subtask subtask) {
+	public Subtask store(Subtask subtask) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
@@ -13,5 +13,7 @@ public class SubtaskDAO extends Dao {
 		super.manager.getTransaction().commit();
 
 		super.closeSession();
+
+		return subtask;
 	}
 }

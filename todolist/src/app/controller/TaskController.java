@@ -14,7 +14,7 @@ public class TaskController {
 	public TaskController() {
 	}
 
-	public void store(Task task) {
-		this.TASK_DAO.store(task);
+	public Task store(Task task) {
+		return this.TASK_DAO.store(task);
 	}
 }

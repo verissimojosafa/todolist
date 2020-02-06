@@ -2,11 +2,7 @@ package app.controller;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
+import app.dao.InventoryDAO;
 import app.inventory.Inventory;
 
 /**
@@ -15,53 +11,26 @@ import app.inventory.Inventory;
  *
  */
 public class InventoryController {
-	private EntityManagerFactory factory;
-	private EntityManager manager;
+	private final InventoryDAO INVENTORY_DAO = new InventoryDAO();
 
-	public InventoryController() {
-		factory = Persistence.createEntityManagerFactory("todolist");
-		manager = factory.createEntityManager();
-	}
-
-	public void store(Inventory inventory) {
-		manager.getTransaction().begin();
-		manager.persist(inventory);
-
-		manager.getTransaction().commit();
-	}
-
-	public void delete(Inventory inventory) {
-		manager.getTransaction().begin();
-
-		Query deleteInventoryQuery = manager
-				.createNativeQuery("delete from inventories where id = " + inventory.getId());
-		deleteInventoryQuery.executeUpdate();
-
-		manager.getTransaction().commit();
-	}
-
-	public void delete(int id) {
-		manager.getTransaction().begin();
-
-		Query delete = manager.createNativeQuery("delete from inventories where id = " + id);
-		delete.executeUpdate();
-
-		manager.getTransaction().commit();
+	public Inventory store(Inventory inventory) {
+		return this.INVENTORY_DAO.store(inventory);
 	}
 
 	public List<Inventory> retrieveAll() {
-		manager.getTransaction().begin();
-
-		Query select = manager.createQuery("SELECT inventories FROM Inventory inventories");
-		List<Inventory> inventories = select.getResultList();
-
-		manager.getTransaction().commit();
-
-		return inventories;
+		return this.INVENTORY_DAO.retrieveAll();
 	}
 
-	public void close() {
-		manager.close();
-		factory.close();
+	public void delete(int id) {
+		this.INVENTORY_DAO.delete(id);
 	}
+
+	public void update(int id, String name, int priority) {
+		this.INVENTORY_DAO.update(id, name, priority);
+	}
+
+	public List<Inventory> retrieve(String text) {
+		return this.INVENTORY_DAO.retrieve(text);
+	}
+
 }

@@ -39,6 +39,13 @@ public class Item implements ITaskCRUD {
 	public Item() {
 	}
 
+	public Item(Inventory inventory, String name) {
+		if (inventory.getId() != null) {
+			this.inventory = inventory;
+		}
+		this.name = name;
+	}
+
 	public Item(String name, String task, int priority) {
 		this.name = name;
 		this.task = new Task(task, priority);
@@ -111,10 +118,12 @@ public class Item implements ITaskCRUD {
 
 	public String toString() {
 		String item = this.getName() + ":\n";
-		this.task.setTaskSpaces(4);
 
-		item += this.task.toString();
+		if (this.task != null) {
+			this.task.setTaskSpaces(4);
 
+			item += this.task.toString();
+		}
 		return item;
 	}
 }
