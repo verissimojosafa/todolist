@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import app.inventory.item.Item;
+import app.todolist.item.Item;
 
 /**
  * 
@@ -39,12 +39,12 @@ public class ItemDAO extends Dao {
 		return items;
 	}
 
-	public void update(int itemId, String name) {
+	public void update(Long id, String name) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
 
-		Query query = super.manager.createQuery("UPDATE Item SET name = '" + name + "' WHERE id = " + itemId);
+		Query query = super.manager.createQuery("UPDATE Item SET name = '" + name + "' WHERE id = " + id);
 		int updateCount = query.executeUpdate();
 
 		super.manager.getTransaction().commit();
@@ -52,7 +52,7 @@ public class ItemDAO extends Dao {
 		super.manager.close();
 	}
 
-	public void delete(int id) {
+	public void delete(Long id) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
@@ -69,6 +69,7 @@ public class ItemDAO extends Dao {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
+
 		Query select = super.manager.createQuery("SELECT items from Item items where name like '%" + text + "%'");
 		List<Item> items = select.getResultList();
 
@@ -77,5 +78,20 @@ public class ItemDAO extends Dao {
 		super.closeSession();
 
 		return items;
+	}
+
+	public Item retrieve(Long id) {
+		super.openSession();
+
+		super.manager.getTransaction().begin();
+
+		Query select = super.manager.createQuery("SELECT items from Item items WHERE id = " + id);
+		Item item = (Item) select.getSingleResult();
+
+		super.manager.getTransaction().commit();
+
+		super.closeSession();
+
+		return item;
 	}
 }

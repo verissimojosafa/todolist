@@ -1,31 +1,37 @@
 package test;
 
-import app.controller.InventoryController;
 import app.controller.ItemController;
 import app.controller.SubtaskController;
 import app.controller.TaskController;
-import app.inventory.Inventory;
-import app.inventory.item.Item;
-import app.inventory.item.task.Task;
-import app.inventory.item.task.subtask.Subtask;
+import app.controller.TodolistController;
+import app.todolist.item.task.Task;
+import app.todolist.item.task.subtask.Subtask;
 
 public class ControllersTest {
 	public static void main(String[] args) {
-		InventoryController inventoryController = new InventoryController();
+		TodolistController todolistController = new TodolistController();
 		ItemController itemController = new ItemController();
 		TaskController taskController = new TaskController();
 		SubtaskController subtaskController = new SubtaskController();
 
-		Inventory inventory = new Inventory("Meu inventario", 10);
-		inventory = inventoryController.store(inventory);
+		Task task = taskController.retrieve(15);
 
-		Item item = new Item("item name");
-		item = itemController.store(item);
+		/**
+		 * CRUD
+		 * 
+		 * Create
+		 * 
+		 * Retrieve
+		 * 
+		 * Retrieve All
+		 * 
+		 * Update
+		 * 
+		 * Delete
+		 */
+		Subtask subtask = new Subtask(task, "velha subtarefa", 1);
 
-		Task task = new Task(item, "Tarefazassa", 10);
-		task = taskController.store(task);
+		subtaskController.delete(20);
 
-		Subtask subtask = new Subtask(task, "subtarefa", 10);
-		subtask = subtaskController.store(subtask);
 	}
 }

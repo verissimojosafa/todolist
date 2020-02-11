@@ -1,7 +1,7 @@
 package test;
 
-import app.inventory.item.Item;
-import app.inventory.item.task.subtask.ISubtaskCRUD;
+import app.todolist.item.Item;
+import app.todolist.item.task.subtask.ISubtaskCRUD;
 
 public class ItemTest {
 	public static void main(String[] args) {

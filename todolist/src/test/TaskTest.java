@@ -1,6 +1,6 @@
 package test;
 
-import app.inventory.item.task.Task;
+import app.todolist.item.task.Task;
 
 public class TaskTest {
 	public static void main(String[] args) {

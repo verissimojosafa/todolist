@@ -10,10 +10,10 @@
    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
    <!-- mapping -->
-   <class>app.item.task.subtask.Subtask</class>
-   <class>app.item.Task</class>
-   <class>app.item.Item</class>
-   <class>app.inventory.Inventory</class>
+   <class>app.todolist.item.task.subtask.Subtask</class>
+   <class>app.todolist.item.task.Task</class>
+   <class>app.todolist.item.Item</class>
+   <class>app.todolist.Todolist</class>
 
    <properties>
     <!-- dados da conexao -->

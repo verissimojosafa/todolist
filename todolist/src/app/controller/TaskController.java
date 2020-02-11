@@ -3,7 +3,7 @@ package app.controller;
 import java.util.List;
 
 import app.dao.TaskDAO;
-import app.inventory.item.task.Task;
+import app.todolist.item.task.Task;
 
 /**
  * 
@@ -21,15 +21,19 @@ public class TaskController {
 		return this.TASK_DAO.retrieveAll();
 	}
 
-	public void delete(int id) {
+	public void delete(Long id) {
 		this.TASK_DAO.delete(id);
 	}
 
-	public void update(int id, String name, int priority) {
-		this.TASK_DAO.update(id, name, priority);
+	public void update(Long id, String task, int priority) {
+		this.TASK_DAO.update(id, task, priority);
 	}
 
 	public List<Task> retrieve(String text) {
 		return this.TASK_DAO.retrieve(text);
+	}
+
+	public Task retrieve(Long id) {
+		return this.TASK_DAO.retrieve(id);
 	}
 }

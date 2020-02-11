@@ -1,7 +1,7 @@
 package test;
 
 import app.controller.TaskController;
-import app.inventory.item.task.Task;
+import app.todolist.item.task.Task;
 
 public class TaskControllerTest {
 	public static void main(String[] args) {

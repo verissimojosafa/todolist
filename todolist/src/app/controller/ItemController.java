@@ -3,7 +3,7 @@ package app.controller;
 import java.util.List;
 
 import app.dao.ItemDAO;
-import app.inventory.item.Item;
+import app.todolist.item.Item;
 
 /**
  * 
@@ -21,15 +21,19 @@ public class ItemController {
 		return this.ITEM_DAO.retrieveAll();
 	}
 
-	public void delete(int id) {
+	public void delete(Long id) {
 		this.ITEM_DAO.delete(id);
 	}
 
-	public void update(int id, String name) {
+	public void update(Long id, String name) {
 		this.ITEM_DAO.update(id, name);
 	}
 
 	public List<Item> retrieve(String text) {
 		return this.ITEM_DAO.retrieve(text);
+	}
+
+	public Item retrieve(Long id) {
+		return this.ITEM_DAO.retrieve(id);
 	}
 }

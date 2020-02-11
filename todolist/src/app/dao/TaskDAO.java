@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import app.inventory.item.task.Task;
+import app.todolist.item.task.Task;
 
 /**
  * 
@@ -16,7 +16,9 @@ public class TaskDAO extends Dao {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
+
 		super.manager.persist(task);
+
 		super.manager.getTransaction().commit();
 
 		super.closeSession();
@@ -38,12 +40,13 @@ public class TaskDAO extends Dao {
 		return tasks;
 	}
 
-	public void update(int taskId, String name, int priority) {
+	public void update(Long id, String task, int priority) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
 
-		Query query = super.manager.createQuery("UPDATE Task SET task = '" + name + "', priority = '"+ priority +"' WHERE id = " + taskId);
+		Query query = super.manager
+				.createQuery("UPDATE Task SET task = '" + task + "', priority = '" + priority + "' WHERE id = " + id);
 		int updateCount = query.executeUpdate();
 
 		super.manager.getTransaction().commit();
@@ -51,7 +54,7 @@ public class TaskDAO extends Dao {
 		super.manager.close();
 	}
 
-	public void delete(int id) {
+	public void delete(Long id) {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
@@ -68,7 +71,7 @@ public class TaskDAO extends Dao {
 		super.openSession();
 
 		super.manager.getTransaction().begin();
-		Query select = super.manager.createQuery("SELECT t from Task t where task like '%" + text + "%'", Task.class);
+		Query select = super.manager.createQuery("SELECT t from Task t where task like '%" + text + "%'");
 		List<Task> tasks = select.getResultList();
 
 		super.manager.getTransaction().commit();
@@ -76,5 +79,19 @@ public class TaskDAO extends Dao {
 		super.closeSession();
 
 		return tasks;
+	}
+
+	public Task retrieve(Long id) {
+		super.openSession();
+
+		super.manager.getTransaction().begin();
+		Query select = super.manager.createQuery("SELECT t from Task t WHERE id = " + id);
+		Task task = (Task) select.getSingleResult();
+
+		super.manager.getTransaction().commit();
+
+		super.closeSession();
+
+		return task;
 	}
 }

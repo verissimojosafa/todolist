@@ -1,7 +1,7 @@
 package test;
 
-import app.inventory.item.task.Task;
-import app.inventory.item.task.subtask.Subtask;
+import app.todolist.item.task.Task;
+import app.todolist.item.task.subtask.Subtask;
 
 public class SubtaskTest {
 

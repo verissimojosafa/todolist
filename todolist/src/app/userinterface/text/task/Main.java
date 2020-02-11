@@ -1,12 +1,11 @@
 package app.userinterface.text.task;
 
+import app.userinterface.Menu;
+
 public class Main {
 	public static void main(String[] args) {
-		String title = "CRUD";
-		String[] options = { "Listar Tarefas", "Buscar Tarefa", "Cadastrar Tarefa", "Editar Tarefa", "Remover Tarefa" };
+		Menu menu = new TaskMenu();
 
-		Interface userinterface = new Interface(title, options);
-
-		userinterface.menu();
+		menu.showMenu();
 	}
 }
