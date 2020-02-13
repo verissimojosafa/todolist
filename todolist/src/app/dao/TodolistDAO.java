@@ -52,6 +52,17 @@ public class TodolistDAO extends Dao {
 
 		super.manager.getTransaction().begin();
 
+		Query deleteSubtaskQuery = super.manager.createNativeQuery(
+				"delete from subtasks where task_id in (select task_id from items where todolist_id = " + id + ")");
+		deleteSubtaskQuery.executeUpdate();
+
+		Query deleteTaskQuery = super.manager.createNativeQuery(
+				"delete from tasks where id in (select task_id from items where todolist_id = " + id + ")");
+		deleteTaskQuery.executeUpdate();
+
+		Query deleteItemQuery = super.manager.createNativeQuery("delete from items where todolist_id = " + id);
+		deleteItemQuery.executeUpdate();
+
 		Query deleteTodolistQuery = super.manager.createNativeQuery("delete from todolists where id = " + id);
 		deleteTodolistQuery.executeUpdate();
 

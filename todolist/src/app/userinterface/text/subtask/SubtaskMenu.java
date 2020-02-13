@@ -5,22 +5,29 @@ import java.util.List;
 import app.controller.SubtaskController;
 import app.todolist.item.task.subtask.Subtask;
 import app.userinterface.text.Menu;
+import app.userinterface.text.task.TaskMenu;
 
 public class SubtaskMenu extends Menu {
 	private SubtaskForm subtaskForm;
 	private SubtaskController subtaskController;
+
+	private TaskMenu taskMenu;
 
 	public SubtaskMenu() {
 		super("Subtask");
 
 		this.subtaskForm = new SubtaskForm(this);
 		this.subtaskController = new SubtaskController();
+
+		this.taskMenu = new TaskMenu();
 	}
 
 	protected void doAction() {
 		String method = this.action.getMethod();
 
 		if (method.equals("create")) {
+			this.taskMenu.retrieveAll();
+
 			this.create();
 
 		} else if (method.equals("retrieve")) {
@@ -30,9 +37,13 @@ public class SubtaskMenu extends Menu {
 			this.retrieveAll();
 
 		} else if (method.equals("update")) {
+			this.retrieveAll();
+
 			this.update();
 
 		} else if (method.equals("delete")) {
+			this.retrieveAll();
+
 			this.delete();
 
 		}

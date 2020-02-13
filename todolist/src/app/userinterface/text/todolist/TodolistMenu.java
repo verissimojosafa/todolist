@@ -30,9 +30,13 @@ public class TodolistMenu extends Menu {
 			this.retrieveAll();
 
 		} else if (method.equals("update")) {
+			this.retrieveAll();
+
 			this.update();
 
 		} else if (method.equals("delete")) {
+			this.retrieveAll();
+
 			this.delete();
 
 		}

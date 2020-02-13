@@ -5,22 +5,29 @@ import java.util.List;
 import app.controller.ItemController;
 import app.todolist.item.Item;
 import app.userinterface.text.Menu;
+import app.userinterface.text.todolist.TodolistMenu;
 
 public class ItemMenu extends Menu {
 	private ItemForm itemForm;
 	private ItemController itemController;
+
+	private TodolistMenu todolistMenu;
 
 	public ItemMenu() {
 		super("Item");
 
 		this.itemForm = new ItemForm(this);
 		this.itemController = new ItemController();
+
+		this.todolistMenu = new TodolistMenu();
 	}
 
 	protected void doAction() {
 		String method = this.action.getMethod();
 
 		if (method.equals("create")) {
+			this.todolistMenu.retrieveAll();
+
 			this.create();
 
 		} else if (method.equals("retrieve")) {
@@ -30,9 +37,13 @@ public class ItemMenu extends Menu {
 			this.retrieveAll();
 
 		} else if (method.equals("update")) {
+			this.retrieveAll();
+
 			this.update();
 
 		} else if (method.equals("delete")) {
+			this.retrieveAll();
+
 			this.delete();
 
 		}

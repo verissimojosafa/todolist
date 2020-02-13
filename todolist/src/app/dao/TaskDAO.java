@@ -59,6 +59,12 @@ public class TaskDAO extends Dao {
 
 		super.manager.getTransaction().begin();
 
+		Query deleteSubtaskQuery = super.manager.createNativeQuery("delete from subtasks where task_id = " + id);
+		deleteSubtaskQuery.executeUpdate();
+
+		Query deleteItemQuery = super.manager.createNativeQuery("delete from items where task_id = " + id);
+		deleteItemQuery.executeUpdate();
+
 		Query deleteTaskQuery = super.manager.createNativeQuery("delete from tasks where id = " + id);
 		deleteTaskQuery.executeUpdate();
 

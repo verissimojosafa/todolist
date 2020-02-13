@@ -40,7 +40,7 @@ public class ItemForm extends Form {
 	}
 
 	public Item getDataToUpdate() {
-		Long id = this.getLong("Digite o id da todolist:");
+		Long id = this.getLong("Digite o id do Item:");
 		String name = this.getString("Digite o novo nome do item:");
 
 		Item item = itemController.retrieve(id);

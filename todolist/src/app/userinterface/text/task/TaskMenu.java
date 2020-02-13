@@ -15,12 +15,14 @@ public class TaskMenu extends Menu {
 
 		this.taskForm = new TaskForm(this);
 		this.taskController = new TaskController();
+
 	}
 
 	protected void doAction() {
 		String method = this.action.getMethod();
 
 		if (method.equals("create")) {
+
 			this.create();
 
 		} else if (method.equals("retrieve")) {
@@ -30,9 +32,13 @@ public class TaskMenu extends Menu {
 			this.retrieveAll();
 
 		} else if (method.equals("update")) {
+			this.retrieveAll();
+
 			this.update();
 
 		} else if (method.equals("delete")) {
+			this.retrieveAll();
+
 			this.delete();
 		}
 	}
