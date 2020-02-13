@@ -1,4 +1,4 @@
-package app.userinterface;
+package app.userinterface.text;
 
 public class Action {
 	private final int CREATE_ACTION = 1;
@@ -10,18 +10,24 @@ public class Action {
 	private final int MIN_ACTION = CREATE_ACTION;
 	private final int MAX_ACTION = DELETE_ACTION;
 
+	private int actionNotAllowed;
+
 	private int action;
 
 	public Action() {
 		this.action = -1;
+
+		this.actionNotAllowed = -1;
+	}
+
+	public Action(int actionNotAllowed) {
+		this.action = -1;
+
+		this.actionNotAllowed = actionNotAllowed;
 	}
 
 	private boolean issetAction() {
-		if (this.action != -1) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.action != -1;
 	}
 
 	public boolean setAction(int action) {
@@ -35,7 +41,7 @@ public class Action {
 		}
 	}
 
-	public String doAction() {
+	public String getMethod() {
 		if (issetAction()) {
 			if (this.action == this.CREATE_ACTION) {
 				return "create";
@@ -60,9 +66,13 @@ public class Action {
 		}
 	}
 
+	private boolean isAllowedAction(int action) {
+		return action != this.actionNotAllowed;
+	}
+
 	public boolean doValidAction(int action) {
 		if (action >= this.MIN_ACTION && action <= this.MAX_ACTION) {
-			return true;
+			return this.isAllowedAction(action);
 
 		} else {
 			return false;
@@ -70,11 +80,35 @@ public class Action {
 		}
 	}
 
+	private String getListActions(String entity) {
+		String listActions = "";
+
+		if (doValidAction(this.CREATE_ACTION)) {
+			listActions += this.CREATE_ACTION + ". Criar " + entity + "\n";
+		}
+
+		if (doValidAction(this.RETRIEVE_ACTION)) {
+			listActions += this.RETRIEVE_ACTION + ". Buscar " + entity + "\n";
+		}
+
+		if (doValidAction(this.RETRIEVEALL_ACTION)) {
+			listActions += this.RETRIEVEALL_ACTION + ". Listar " + entity + "\n";
+		}
+
+		if (doValidAction(this.UPDATE_ACTION)) {
+			listActions += this.UPDATE_ACTION + ". Atualizar " + entity + "\n";
+		}
+
+		if (doValidAction(this.DELETE_ACTION)) {
+			listActions += this.DELETE_ACTION + ". Deletar " + entity + "\n";
+		}
+
+		return listActions;
+	}
+
 	public void showActions(String entity) {
-		System.out.println(this.CREATE_ACTION + ". Criar " + entity);
-		System.out.println(this.RETRIEVE_ACTION + ". Buscar " + entity);
-		System.out.println(this.RETRIEVEALL_ACTION + ". Listar " + entity);
-		System.out.println(this.UPDATE_ACTION + ". Atualizar " + entity);
-		System.out.println(this.DELETE_ACTION + ". Deletar " + entity);
+		String listActions = this.getListActions(entity);
+
+		System.out.println(listActions);
 	}
 }

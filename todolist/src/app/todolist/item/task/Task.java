@@ -10,11 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import app.todolist.item.Item;
 import app.todolist.item.task.subtask.ISubtaskCRUD;
 import app.todolist.item.task.subtask.Subtask;
 
@@ -31,10 +29,6 @@ public class Task implements ISubtaskCRUD {
 	@Column(name = "id")
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name = "item_id")
-	private Item item;
-
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "task_id")
 	private List<Subtask> subtasks;
@@ -50,15 +44,6 @@ public class Task implements ISubtaskCRUD {
 
 	public Task() {
 		this.taskSpaces = 0;
-	}
-
-	public Task(Item item, String task, int priority) {
-		if (item.getId() != null) {
-			this.item = item;
-		}
-
-		this.task = task;
-		this.priority = priority;
 	}
 
 	public Task(String task, int priority) {
@@ -233,8 +218,16 @@ public class Task implements ISubtaskCRUD {
 		String subtasksString = "";
 		for (Subtask subtask : subtasks) {
 
-			subtasksString += this.getSpaces(this.taskSpaces + indentation) + subtask.getTask() + ", "
-					+ subtask.getPriority() + "\n";
+			if (subtask == null) {
+				continue;
+			}
+
+			subtask.setSubtaskSpaces(this.taskSpaces + indentation);
+
+			subtasksString += subtask.toString();
+
+//			subtasksString += this.getSpaces(this.taskSpaces + indentation) + subtask.getTask() + ", "
+//					+ subtask.getPriority() + "\n";
 		}
 
 		return subtasksString;
@@ -251,8 +244,16 @@ public class Task implements ISubtaskCRUD {
 	}
 
 	public String toString() {
+		String id = "";
+		if (this.getId() != null) {
+			id += this.getId();
+
+			id = id + " - ";
+		}
+
 		final int INDENTATION = 4;
-		String task = this.getSpaces(this.taskSpaces) + this.getTask() + ", " + this.getPriority() + "\n";
+
+		String task = this.getSpaces(this.taskSpaces) + id + this.getTask() + ", " + this.getPriority() + ":\n";
 
 		task += this.retrieveAllSubtasks(INDENTATION);
 

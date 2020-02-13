@@ -2,14 +2,14 @@ package app.userinterface.text.todolist;
 
 import app.controller.TodolistController;
 import app.todolist.Todolist;
-import app.userinterface.Form;
+import app.userinterface.text.Form;
 
 public class TodolistForm extends Form {
 
 	private TodolistController todolistController;
 
-	public TodolistForm() {
-		super();
+	public TodolistForm(TodolistMenu menu) {
+		super(menu);
 
 		this.todolistController = new TodolistController();
 	}

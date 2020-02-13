@@ -1,4 +1,4 @@
-package app.userinterface;
+package app.userinterface.text;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,30 +6,26 @@ import java.util.Scanner;
 public class Form {
 	private Action action;
 
-	public Form() {
-		this.action = new Action();
+	public Form(Menu menu) {
+		this.action = menu.getAction();
 	}
 
-	public int getAction() {
+	public int getAction(int flag) {
 		Scanner intInput = new Scanner(System.in);
 
 		int action = 0;
 
 		do {
-			System.out.println("Digite um numero: ");
+			action = this.getInt("Digite uma acao:");
 
-			try {
-				action = intInput.nextInt();
-
-			} catch (InputMismatchException ime) {
-				System.out.println("Não insira strings >:(");
-
-				intInput = new Scanner(System.in);
+			if (action == flag) {
+				break;
 			}
 
 		} while (!this.action.doValidAction(action));
 
 		return action;
+
 	}
 
 	public String getDataToRetrieve(String msg) {

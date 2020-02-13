@@ -2,28 +2,25 @@ package app.userinterface.text.task;
 
 import app.controller.ItemController;
 import app.controller.TaskController;
-import app.todolist.item.Item;
 import app.todolist.item.task.Task;
-import app.userinterface.Form;
+import app.userinterface.text.Form;
 
 public class TaskForm extends Form {
 	private TaskController taskController;
 	private ItemController itemController;
 
-	public TaskForm() {
-		super();
+	public TaskForm(TaskMenu menu) {
+		super(menu);
 
 		this.taskController = new TaskController();
 		this.itemController = new ItemController();
 	}
 
 	public Task getDataToCreate() {
-		Long id = this.getLong("Digite o id do item:");
 		String activity = this.getString("Digite a tarefa:");
-		int priority = this.getInt("Digite a prioridade");
+		int priority = this.getInt("Digite a prioridade:");
 
-		Item item = itemController.retrieve(id);
-		Task task = new Task(item, activity, priority);
+		Task task = new Task(activity, priority);
 
 		return task;
 	}

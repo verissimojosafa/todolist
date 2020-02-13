@@ -181,7 +181,9 @@ public class Todolist implements IItemCRUD {
 				continue;
 			}
 
-			list += "    " + item.toString();
+			item.setItemSpaces(4);
+
+			list += item.toString();
 
 			if (i < this.items.size() - 1) {
 				list += "\n";

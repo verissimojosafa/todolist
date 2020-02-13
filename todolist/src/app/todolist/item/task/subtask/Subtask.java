@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import app.todolist.item.task.Task;
 
@@ -33,6 +34,9 @@ public class Subtask {
 	@Column(name = "priority")
 	private int priority;
 
+	@Transient
+	private int subtaskSpaces;
+
 	public Subtask() {
 	}
 
@@ -40,6 +44,7 @@ public class Subtask {
 		this.rootTask = rootTask;
 		this.task = task;
 		this.priority = priority;
+		this.subtaskSpaces = 0;
 	}
 
 	public Long getId() {
@@ -66,8 +71,28 @@ public class Subtask {
 		this.priority = priority;
 	}
 
+	public void setSubtaskSpaces(int spaces) {
+		this.subtaskSpaces = spaces;
+	}
+
+	private String getSubtaskSpaces() {
+		String spaces = "";
+		for (int i = 1; i <= this.subtaskSpaces; i++) {
+			spaces += " ";
+		}
+
+		return spaces;
+	}
+
 	public String toString() {
-		String subtask = this.getTask() + ", " + this.getPriority() + "\n";
+		String id = "";
+		if (this.id != null) {
+			id += this.getId();
+
+			id = id + " - ";
+		}
+
+		String subtask = this.getSubtaskSpaces() + id + this.getTask() + ", " + this.getPriority() + ";\n";
 
 		return subtask;
 	}

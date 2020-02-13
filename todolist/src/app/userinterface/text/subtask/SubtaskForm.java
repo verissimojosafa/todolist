@@ -4,14 +4,14 @@ import app.controller.SubtaskController;
 import app.controller.TaskController;
 import app.todolist.item.task.Task;
 import app.todolist.item.task.subtask.Subtask;
-import app.userinterface.Form;
+import app.userinterface.text.Form;
 
 public class SubtaskForm extends Form {
 	private TaskController taskController;
 	private SubtaskController subtaskController;
 
-	public SubtaskForm() {
-		super();
+	public SubtaskForm(SubtaskMenu menu) {
+		super(menu);
 
 		this.taskController = new TaskController();
 		this.subtaskController = new SubtaskController();

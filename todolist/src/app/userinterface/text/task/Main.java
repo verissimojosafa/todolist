@@ -1,6 +1,6 @@
 package app.userinterface.text.task;
 
-import app.userinterface.Menu;
+import app.userinterface.text.Menu;
 
 public class Main {
 	public static void main(String[] args) {

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -33,16 +34,25 @@ public class Item implements ITaskCRUD {
 	@Column(name = "name")
 	private String name;
 
-	@Transient
+	@OneToOne
+	@JoinColumn(name = "task_id")
 	private Task task;
+
+	@Transient
+	private int itemSpaces;
 
 	public Item() {
 	}
 
-	public Item(Todolist todolist, String name) {
+	public Item(Todolist todolist, Task task, String name) {
 		if (todolist.getId() != null) {
 			this.todolist = todolist;
 		}
+
+		if (task.getId() != null) {
+			this.task = task;
+		}
+
 		this.name = name;
 	}
 
@@ -120,6 +130,19 @@ public class Item implements ITaskCRUD {
 		return true;
 	}
 
+	public void setItemSpaces(int spaces) {
+		this.itemSpaces = spaces;
+	}
+
+	private String getItemSpaces() {
+		String spaces = "";
+		for (int i = 1; i <= this.itemSpaces; i++) {
+			spaces += " ";
+		}
+
+		return spaces;
+	}
+
 	public String toString() {
 		String id = "";
 		if (this.getId() != null) {
@@ -128,10 +151,12 @@ public class Item implements ITaskCRUD {
 			id = id + " - ";
 		}
 
-		String item = id + this.getName() + ":\n";
+		String item = this.getItemSpaces() + id + this.getName() + ":\n";
 
 		if (this.task != null) {
-			this.task.setTaskSpaces(4);
+			final int INDENTATION = 4;
+
+			this.task.setTaskSpaces(this.itemSpaces + INDENTATION);
 
 			item += this.task.toString();
 		}
